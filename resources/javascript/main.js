@@ -49,5 +49,19 @@
 		info.open(map, dummyMarker);
 	});
 
-	map.data.loadGeoJson('/resources/data/locations.json');
+	map.data.loadGeoJson('/resources/data/locations.json', {}, function(features) {
+		var bounds = new maps.LatLngBounds();
+		$.each(features, function(i, feature) {
+			feature.getGeometry().forEachLatLng(function(latLng) {
+				bounds.extend(latLng);
+			});
+		});
+		map.setOptions({
+			maxZoom: zoom
+		});
+		map.fitBounds(bounds);
+		map.setOptions({
+			maxZoom: null
+		});
+	});
 })(jQuery, google.maps);
