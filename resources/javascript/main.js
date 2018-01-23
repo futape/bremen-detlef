@@ -8,4 +8,12 @@
 			center: bremen,
 			zoom: zoom
 		});
+
+	map.data.setStyle(function(feature) {
+		return {
+			title: feature.getProperty('title')
+		}
+	});
+
+	map.data.loadGeoJson('/resources/data/locations.json');
 })(jQuery, google.maps);
